@@ -1,0 +1,6 @@
+.env
+vcpkg
+
+libcpr.dll
+libcurl.dll
+libzlib1.dll
