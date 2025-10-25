@@ -76,9 +76,9 @@ int main(){
         jsonError = true;
     }
     if (!jsonError){
-        cout << endl << setw(4) << "Here is the weather information for " << response["name"] << ": " << endl;
+        cout << endl << setw(4) << "Here is the weather information for " << response["name"].get<string>() << ": " << endl;
         cout << "The temperature is: " << response["main"]["temp"] << " " << temp << ", but it feels like " << response["main"]["feels_like"] << " " << temp << "." << endl;
-        cout << "The weather is currently " << response["weather"][0]["main"].get<string>() << "." << endl;
+        cout << "The weather is currently: " << response["weather"][0]["main"].get<string>() << "." << endl;
         cout << "The percentage of clouds today are: " << response["clouds"]["all"] << "%." << endl;
         cout << "The wind speed is: " << response["wind"]["speed"] << " " << wind << "." << endl;
     }
