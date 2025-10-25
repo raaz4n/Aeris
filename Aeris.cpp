@@ -49,7 +49,37 @@ int main(){
         cout << "Invalid unit!" << endl;
     }
 
+    char temp;
+    if (unit == "metric"){
+        temp = 'C';
+    }
+    else{
+        temp = 'F';
+    }
+
+    string wind;
+    if (unit == "metric"){
+        wind = "m/s";
+    }
+    else{
+        wind = "mi/h";
+    }
+
+    bool jsonError = false;
     cpr::Response r = cpr::Get(cpr::Url{link});
-    json response = json::parse(r.text);
-    cout << setw(4) << "Temperature: " << response["main"]["temp"]  << endl << setw(4) << "Weather: " << response["weather"][0]["main"] << endl;
+    json response;
+    try {
+        response = json::parse(r.text);
+    }
+    catch (json::parse_error& ex) {
+        cout << "JSON Parse error! Please make sure you are giving proper inputs." << endl;
+        jsonError = true;
+    }
+    if (!jsonError){
+        cout << endl << setw(4) << "Here is the weather information for " << response["name"] << ": " << endl;
+        cout << "The temperature is: " << response["main"]["temp"] << " " << temp << ", but it feels like " << response["main"]["feels_like"] << " " << temp << "." << endl;
+        cout << "The weather is currently " << response["weather"][0]["main"].get<string>() << "." << endl;
+        cout << "The percentage of clouds today are: " << response["clouds"]["all"] << "%." << endl;
+        cout << "The wind speed is: " << response["wind"]["speed"] << " " << wind << "." << endl;
+    }
 }
