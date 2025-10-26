@@ -4,10 +4,12 @@
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <algorithm>
+#include "crow.h"
 using namespace std;
 using json = nlohmann::json;
 
 int main(){
+    crow::SimpleApp app;
     //string API_KEY = getenv("API_KEY");
     ifstream file("test.txt");
     string API_KEY;
@@ -18,6 +20,15 @@ int main(){
     string country;
     string unit;
 
+    CROW_ROUTE(app, "/")([](){
+        return "Hello world";
+    });
+
+    CROW_ROUTE(app, "/yo")([](){
+        return "yo what's up";
+    });
+
+    app.port(18080).multithreaded().run();
 
     cout << "Enter a city: ";                                               // Format the city to be link friendly, as cpr seems to not automatically handle spaces
     getline(cin, city);
