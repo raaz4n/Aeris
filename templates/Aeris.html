@@ -6,16 +6,20 @@
 <input type="text" id="state" name="state" placeholder="state">
 <label for="country">Country:</label>
 <input type="text" id="country" name="country" placeholder="country">
-<label for="unit">Unit:</label>
-<input type="text" id="unit" name="unit" placeholder="unit">
-<button type="submit">Check link</button>
+<label>Unit:</label>
+<input type="radio" id="metric" name="unit" value="metric" checked>
+<label for="metric">°C</label>
+<input type="radio" id="imperial" name="unit" value="imperial">
+<label for="imperial">°F</label>
+<button type="submit">Check temperature</button>
 
 
 <p>Temperature is: {{temperature}} {{tempChar}}</p>
 <p>Weather is: {{desc}}</p>
 
-<script src="{{ url_for('static', filename='Aeris.js') }}"></script>
-<div id = "locationList">
-    
+<div id="locationList">
+
 </div>
+
+<script src="{{ url_for('static', filename='Aeris.js') }}"></script>
 </html>
