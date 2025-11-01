@@ -1,0 +1,21 @@
+<html>
+<form action="{{ url_for("aeris")}}" method="post">
+<label for="city">City:</label>
+<input type="text" id="city" name="city" placeholder="city">
+<label for="state">State:</label>
+<input type="text" id="state" name="state" placeholder="state">
+<label for="country">Country:</label>
+<input type="text" id="country" name="country" placeholder="country">
+<label for="unit">Unit:</label>
+<input type="text" id="unit" name="unit" placeholder="unit">
+<button type="submit">Check link</button>
+
+
+<p>Temperature is: {{temperature}} {{tempChar}}</p>
+<p>Weather is: {{desc}}</p>
+
+<script src="{{ url_for('static', filename='Aeris.js') }}"></script>
+<div id = "locationList">
+    
+</div>
+</html>
