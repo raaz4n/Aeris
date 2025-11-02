@@ -6,6 +6,8 @@ import os
 
 load_dotenv()
 api_key = os.getenv("API_KEY")
+location_api_key = os.getenv("LOCATION_API_KEY")
+print(location_api_key)
 app = Flask(__name__)
 
 @app.route("/search", methods=["GET"])
@@ -15,10 +17,33 @@ def search():
     if not query:
         return '[]'
     
-    geourl = f"http://api.openweathermap.org/geo/1.0/direct?q={query}&limit=10&appid={api_key}"
+    geourl = f"https://us1.locationiq.com/v1/search?q={query}&format=json&addressdetails=1&limit=20&key={location_api_key}"
     response = requests.request("GET", geourl)
     
     return response.text
+
+@app.route("/weather", methods=["GET"])
+def weather():
+    city = request.args.get("city")
+    state = request.args.get("state")
+    country = request.args.get("country")
+    unit = request.args.get("unit")
+    if state:
+        url = f"http://api.openweathermap.org/data/2.5/weather?q={city},{state},{country}&units={unit}&lang=en&appid={api_key}"
+    else:
+        url = f"http://api.openweathermap.org/data/2.5/weather?q={city},{country}&units={unit}&lang=en&appid={api_key}"
+    response = json.loads(requests.request("GET", url).text)
+    temperature = response["main"]["temp"]
+    desc = response["weather"][0]["main"]
+        
+    if (unit.lower() == "imperial"):
+        tempChar = "°F"
+    elif (unit.lower() == "metric"):
+        tempChar = "°C"
+    else:
+        tempChar = ""
+
+    return {"temperature": temperature, "desc": desc, "tempChar": tempChar}
 
 
 @app.route("/", methods=["GET", "POST"])
