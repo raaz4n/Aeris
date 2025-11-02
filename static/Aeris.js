@@ -18,14 +18,14 @@ input.addEventListener('input', function(thing) {
         }
         fetch(`/search?q=${query}`)
             .then(response => response.json())
-            .then(data => { data.forEach(location => {
+            .then(data => { data.features.forEach(feature => {
                 const item = document.createElement('div');
-                item.textContent = location.display_name;
+                item.textContent = feature.properties.full_address;
                 locationList.appendChild(item);
                 item.addEventListener('click', function() {
-                    document.getElementById('city').value = location.address.city || location.address.town || location.address.village || location.address.county || location.address.municipality || location.name || ''
-                    document.getElementById('state').value = location.address.state || '';
-                    document.getElementById('country').value = location.address.country;
+                    document.getElementById('city').value = feature.properties.context.place.name || '';
+                    document.getElementById('state').value = feature.properties.context.region.name || '';
+                    document.getElementById('country').value = feature.properties.context.country.name || '';
                 });
             });
         });
@@ -47,14 +47,14 @@ input2.addEventListener('input', function(thing) {
         
         fetch(`/search?q=${cityValue},${countryValue}`)
             .then(response => response.json())
-            .then(data => { data.forEach(location => {
+            .then(data => { data.features.forEach(feature => {
                 const item = document.createElement('div');
-                item.textContent = location.display_name;
+                item.textContent = feature.properties.full_address;
                 locationList.appendChild(item);
                 item.addEventListener('click', function() {
-                    document.getElementById('city').value = location.address.city || location.address.town || location.address.village || location.address.county || location.address.municipality || location.name || '';
-                    document.getElementById('state').value = location.address.state || '';
-                    document.getElementById('country').value = location.address.country;
+                    document.getElementById('city').value = feature.properties.context.place.name || '';
+                    document.getElementById('state').value = feature.properties.context.region.name || '';
+                    document.getElementById('country').value = feature.properties.context.country.name || '';
                 });
             });
         });

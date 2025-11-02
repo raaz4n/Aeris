@@ -1,13 +1,12 @@
 from flask import Flask, request, render_template
 from requests.exceptions import HTTPError
 from dotenv import load_dotenv
-import json, requests
-import os
+import json, requests, os
 
 load_dotenv()
 api_key = os.getenv("API_KEY")
 location_api_key = os.getenv("LOCATION_API_KEY")
-print(location_api_key)
+mapbox_api = os.getenv("MAPBOX_API")
 app = Flask(__name__)
 
 @app.route("/search", methods=["GET"])
@@ -17,7 +16,7 @@ def search():
     if not query:
         return '[]'
     
-    geourl = f"https://us1.locationiq.com/v1/search?q={query}&format=json&addressdetails=1&limit=20&key={location_api_key}"
+    geourl = f"https://api.mapbox.com/search/geocode/v6/forward?q={query}&access_token={mapbox_api}&language=en&limit=20&types=place,address"
     response = requests.request("GET", geourl)
     
     return response.text
