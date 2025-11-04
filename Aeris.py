@@ -1,5 +1,4 @@
-from flask import Flask, request, render_template
-from requests.exceptions import HTTPError
+from flask import Flask, request, render_template, jsonify
 from dotenv import load_dotenv
 import json, requests, os
 
@@ -16,7 +15,7 @@ def search():
     if not query:
         return '[]'
     
-    geourl = f"https://api.mapbox.com/search/geocode/v6/forward?q={query}&access_token={mapbox_api}&language=en&limit=20&types=place,address"
+    geourl = f"https://api.mapbox.com/search/geocode/v6/forward?q={query}&access_token={mapbox_api}&language=en&limit=20&types=place"
     response = requests.request("GET", geourl)
     
     return response.text
@@ -27,10 +26,12 @@ def weather():
     state = request.args.get("state")
     country = request.args.get("country")
     unit = request.args.get("unit")
-    if state:
+    
+    if state and state.strip():
         url = f"http://api.openweathermap.org/data/2.5/weather?q={city},{state},{country}&units={unit}&lang=en&appid={api_key}"
     else:
         url = f"http://api.openweathermap.org/data/2.5/weather?q={city},{country}&units={unit}&lang=en&appid={api_key}"
+    
     response = json.loads(requests.request("GET", url).text)
     temperature = response["main"]["temp"]
     desc = response["weather"][0]["main"]
@@ -53,7 +54,7 @@ def aeris():
         country = request.form.get("country")
         unit = request.form.get("unit")
         
-        if state:
+        if state and state.strip():
             url = f"http://api.openweathermap.org/data/2.5/weather?q={city},{state},{country}&units={unit}&lang=en&appid={api_key}"
         else:
             url = f"http://api.openweathermap.org/data/2.5/weather?q={city},{country}&units={unit}&lang=en&appid={api_key}"
@@ -71,7 +72,7 @@ def aeris():
             tempChar = ""
             
         return render_template("Aeris.html", city=city, state=state, country=country, tempChar=tempChar, 
-                                 unit=unit, temperature=temperature, desc=desc, api_key=api_key)
+                                 unit=unit, temperature=temperature, desc=desc)
     
     return render_template("Aeris.html")
 

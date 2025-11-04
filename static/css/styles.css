@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+#search-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+#search {
+    width: 100%;
+    padding: 12px 40px;
+    font-size: 16px;
+    border: 1px solid #cacaca;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#search:focus {
+    outline: none;
+    border-color: #acacac;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.clear-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #c00000;
+    cursor: pointer;
+    display: none;
+}
+
+#locationList {
+    position: absolute;
+    width: 100%;
+    max-height: 400px;
+    overflow-y: auto;
+    background: #ffffff;
+    border: 1px #cacaca;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 5px 10px 10px rgba(0,0,0,0.1);
+    display: none;
+}
+
+#locationList.show {
+    display: block;
+}
+
+.location-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.location-item:hover {
+    background-color: #f5f5f5;
+}
+
+.location-item:last-child {
+    border-bottom: none;
+}
+
+#weather-display {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #e1fffb;
+    border-radius: 5px;
+    display: block;
+}
+
+.unit-selector {
+    margin-top: 15px;
+}

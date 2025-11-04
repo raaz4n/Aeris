@@ -1,25 +1,34 @@
-<html>
-<form action="{{ url_for("aeris")}}" method="post">
-<label for="city">City:</label>
-<input type="text" id="city" name="city" placeholder="city">
-<label for="state">State:</label>
-<input type="text" id="state" name="state" placeholder="state">
-<label for="country">Country:</label>
-<input type="text" id="country" name="country" placeholder="country">
-<label>Unit:</label>
-<input type="radio" id="metric" name="unit" value="metric" checked>
-<label for="metric">°C</label>
-<input type="radio" id="imperial" name="unit" value="imperial">
-<label for="imperial">°F</label>
-<button type="submit">Check temperature</button>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Aeris</title>
+        <link rel="stylesheet" href="../static/css/styles.css">
+    </head>
 
+    <body>
+        <h1>Aeris</h1>
+        
+        <div id="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="search" placeholder="Search for a city...">
+            <span class="clear-icon" id="clear-search">✕</span>
+            <div id="locationList"></div>
+        </div>
+        
+        <div class="unit-selector">
+            <label>Unit:</label>
+            <input type="radio" id="metric" name="unit" value="metric" checked>
+            <label for="metric">°C</label>
+            <input type="radio" id="imperial" name="unit" value="imperial">
+            <label for="imperial">°F</label>
+        </div>
+        
+        <div id="weather-display">
+            <p id="temperature">Temperature is: </p>
+            <p id="weather">Weather is: </p>
+        </div>
 
-<p>Temperature is: {{temperature}} {{tempChar}}</p>
-<p>Weather is: {{desc}}</p>
-
-<div id="locationList">
-
-</div>
-
-<script src="{{ url_for('static', filename='Aeris.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/Aeris.js') }}"></script>
+    </body>
 </html>
