@@ -3,6 +3,44 @@ const searchInput = document.getElementById('search');
 const locationList = document.getElementById('locationList');
 const clearBtn = document.getElementById('clear-search');
 
+const metricRadio = document.getElementById('metric')
+const imperialRadio = document.getElementById('imperial')
+let currentCity = '';
+let currentState = '';
+let currentCountry = '';
+
+metricRadio.addEventListener('change', function(){
+    const unit = this.value;
+    if (currentCity){
+        fetch(`/weather?city=${currentCity}&state=${currentState}&country=${currentCountry}&unit=${unit}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('temperature').textContent = `Temperature: ${data.temperature} ${data.tempChar}`;
+                document.getElementById('weather').innerHTML = `Weather: ${data.desc} <img id="weather-icon" src="https://openweathermap.org/img/wn/${data.icon}@2x.png" alt="Weather icon">`;
+            })
+            .catch(error => {
+                document.getElementById('temperature').textContent = 'Temperature: Error loading';
+                document.getElementById('weather').textContent = 'Weather: Unable to fetch weather data';
+            });
+    }
+})
+
+imperialRadio.addEventListener('change', function(){
+    const unit = this.value;
+    if (currentCity){
+        fetch(`/weather?city=${currentCity}&state=${currentState}&country=${currentCountry}&unit=${unit}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('temperature').textContent = `Temperature: ${data.temperature} ${data.tempChar}`;
+                document.getElementById('weather').innerHTML = `Weather: ${data.desc} <img id="weather-icon" src="https://openweathermap.org/img/wn/${data.icon}@2x.png" alt="Weather icon">`;
+            })
+            .catch(error => {
+                document.getElementById('temperature').textContent = 'Temperature: Error loading';
+                document.getElementById('weather').textContent = 'Weather: Unable to fetch weather data';
+            });
+    }
+});
+
 searchInput.addEventListener('click', function(){
     if (searchInput.value) {
         clearBtn.style.display = 'block';
@@ -73,7 +111,12 @@ searchInput.addEventListener('input', function() {
                     locationList.classList.remove('show');
                     clearBtn.style.display = 'none';
                     
+                    currentCity = cityName;
+                    currentState = stateName;
+                    currentCountry = countryName;
+
                     const unitRadio = document.querySelector('input[name="unit"]:checked');
+
                     let unit;
                     if (unitRadio) {
                         unit = unitRadio.value;
@@ -84,12 +127,12 @@ searchInput.addEventListener('input', function() {
                     fetch(`/weather?city=${cityName}&state=${stateName}&country=${countryName}&unit=${unit}`)
                         .then(response => response.json())
                         .then(data => {
-                            document.getElementById('temperature').textContent = `Temperature is: ${data.temperature} ${data.tempChar}`;
-                            document.getElementById('weather').textContent = `Weather is: ${data.desc}`;
+                            document.getElementById('temperature').textContent = `Temperature: ${data.temperature} ${data.tempChar}`;
+                            document.getElementById('weather').innerHTML = `Weather: ${data.desc} <img id="weather-icon" src="https://openweathermap.org/img/wn/${data.icon}@2x.png" alt="Weather icon">`;
                         })
                         .catch(error => {
-                            document.getElementById('temperature').textContent = 'Temperature is: Error loading';
-                            document.getElementById('weather').textContent = 'Weather is: Unable to fetch weather data';
+                            document.getElementById('temperature').textContent = 'Temperature: Error loading';
+                            document.getElementById('weather').textContent = 'Weather: Unable to fetch weather data';
                         });
                     });
                 });

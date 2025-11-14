@@ -74,9 +74,23 @@ body {
 #weather-display {
     margin-top: 30px;
     padding: 20px;
-    background-color: #e1fffb;
+    background-color: #c4d9ff;
     border-radius: 5px;
     display: block;
+}
+
+#temperature {
+    margin-bottom: 0px;
+}
+
+#weather {
+    margin-top: 20px;
+    line-height: 50px;
+}
+
+#weather-icon {
+    vertical-align: middle;
+    width: 50px;
 }
 
 .unit-selector {

@@ -34,7 +34,9 @@ def weather():
     
     response = json.loads(requests.request("GET", url).text)
     temperature = response["main"]["temp"]
-    desc = response["weather"][0]["main"]
+    desc = response["weather"][0]["description"]
+    icon = response["weather"][0]["icon"]
+
         
     if (unit.lower() == "imperial"):
         tempChar = "°F"
@@ -43,7 +45,7 @@ def weather():
     else:
         tempChar = ""
 
-    return {"temperature": temperature, "desc": desc, "tempChar": tempChar}
+    return {"temperature": temperature, "desc": desc, "tempChar": tempChar, "icon": icon}
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -62,7 +64,8 @@ def aeris():
         response = json.loads(requests.request("GET", url).text)
 
         temperature = response["main"]["temp"]
-        desc = response["weather"][0]["main"]
+        desc = response["weather"][0]["description"]
+        icon = response["weather"][0]["icon"]
         
         if (unit.lower() == "imperial"):
             tempChar = "°F"
@@ -72,7 +75,7 @@ def aeris():
             tempChar = ""
             
         return render_template("Aeris.html", city=city, state=state, country=country, tempChar=tempChar, 
-                                 unit=unit, temperature=temperature, desc=desc)
+                                 unit=unit, temperature=temperature, desc=desc, icon=icon)
     
     return render_template("Aeris.html")
 
