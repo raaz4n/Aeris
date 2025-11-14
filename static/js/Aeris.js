@@ -63,6 +63,11 @@ searchInput.addEventListener('input', function() {
     const searchValue = searchInput.value.trim();
     if (!searchValue) {
         locationList.classList.remove('show');
+        document.getElementById('temperature').textContent = `Temperature: `;
+        document.getElementById('weather').textContent = `Weather: `;
+        currentCity = '';
+        currentState = '';
+        currentCountry = '';
         return;
     }
     
@@ -151,6 +156,11 @@ clearBtn.addEventListener('click', function() {
     clearBtn.style.display = 'none';
     locationList.classList.remove('show');
     searchInput.focus();
+    document.getElementById('temperature').textContent = `Temperature: `;
+    document.getElementById('weather').textContent = `Weather: `;
+    currentCity = '';
+    currentState = '';
+    currentCountry = '';
 });
 
 document.addEventListener('click', function(event) {

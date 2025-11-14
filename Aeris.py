@@ -8,6 +8,10 @@ location_api_key = os.getenv("LOCATION_API_KEY")
 mapbox_api = os.getenv("MAPBOX_API")
 app = Flask(__name__)
 
+@app.route("/about", methods=["GET"])
+def about():
+    return render_template("about.html")
+
 @app.route("/search", methods=["GET"])
 def search():
     query = request.args.get('q')
