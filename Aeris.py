@@ -83,4 +83,4 @@ def aeris():
     
     return render_template("Aeris.html")
 
-app.run(host="0.0.0.0", port = 80)
+app.run(host="0.0.0.0", port = 5000)
